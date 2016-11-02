@@ -7,13 +7,17 @@ var bodyParser = require('body-parser');
 
 const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const passport = require('passport');
+const flash = require('connect-flash');
+const validator = require('express-validator');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-mongoose.connect('localhost:27017/gestionJs');
-
+mongoose.connect('localhost:27017/polosur');
+require('./config/passport');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -35,7 +39,14 @@ app.use((req,res,next)=>{
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(validator());
 app.use(cookieParser());
+app.use(session({secret: 'mysuperSecretWord', resave: false, saveUninitialized: false}));
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);

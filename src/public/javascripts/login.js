@@ -1,5 +1,5 @@
 $(function(){
-var textfield = $("input[name=user]");
+  var textfield = $("input[name=user]");
             $('button[type="submit"]').click(function(e) {
                 e.preventDefault();
                 //little validation just to check username
@@ -15,13 +15,13 @@ var textfield = $("input[name=user]");
                     });
                     //change button text
                     $('button[type="submit"]').html("continue")
-                    .removeClass("btn-info")
-                    .addClass("btn-default").click(function(){
-                    $("input").css({
-                    "height":"auto",
-                    "padding":"10px",
-                    "opacity":"1"
-                    }).val("");
+                      .removeClass("btn-info")
+                      .addClass("btn-default").click(function(){
+                        $("input").css({
+                          "height":"auto",
+                          "padding":"10px",
+                          "opacity":"1"
+                        }).val("");
                     });
 
                     //show avatar
@@ -31,9 +31,8 @@ var textfield = $("input[name=user]");
                 } else {
                     //remove success mesage replaced with error message
                     $("#output").removeClass(' alert alert-success');
-                    $("#output").addClass("alert alert-danger animated fadeInUp").html("sorry enter a username ");
+                    $("#output").addClass("alert alert-danger animated fadeInUp").html("Porfavor, Ingresa un Usuario");
                 }
                 //console.log(textfield.val());
-
             });
 });

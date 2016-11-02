@@ -1,13 +1,22 @@
 <div class="container">
 	<div class="login-container">
+						{{#if hasErrors}}
+							<div class="alert alert-danger">
+								{{#each messages}}
+									<p>{{this}}</p>
+								{{/each}}
+							</div>
+						{{/if}}
             <div id="output"></div>
             <div class="avatar"></div>
             <div class="form-box">
-                <form action="/users/login" method="post">
-                    <input name="user" type="text" placeholder="username">
+                <form action="/users/signup" method="post">
+                    <input name="email" type="text" placeholder="email">
                     <input name="password" type="password" placeholder="password">
+										<input type="hidden" name="_csrf" value="{{csrfToken}}">
                     <button class="btn btn-info btn-block login" type="submit">Login</button>
-                </form>
+								</form>
+
             </div>
         </div>
 </div>
