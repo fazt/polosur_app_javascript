@@ -7,38 +7,58 @@ var csrfProtection = csrf();
 
 router.use(csrfProtection);
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/dashboard', isLoggedIn, (req, res, next) => {
+  res.render('principal/dashboard', { title: 'Ventas SOftware' });
 });
 
-router.get('/signin', function(req, res, next) {
-  res.render('users/signin', { csrfToken: req.csrfToken() });
+router.get('/logout', isLoggedIn, (req, res, next) => {
+  req.logout();
+  res.redirect('/');
 });
 
-router.get('/signup', function(req, res, next) {
+router.use('/', notLoggedIn, (req, res, next) => {
+  next();
+});
+
+router.get('/signin', (req, res, next) => {
+  var messages = req.flash('error');
+  res.render('users/signin', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
+});
+
+router.post('/signin', passport.authenticate('local.signin',{
+  successRedirect: '/users/dashboard',
+  failureRedirect: '/users/signin',
+  failureFlash: true
+}));
+
+router.get('/signin', (req, res, next) => {
+  var messages = req.flash('error');
+  res.render('users/signin', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
+});
+
+router.get('/signup', (req, res, next) => {
   var messages = req.flash('error');
   res.render('users/signup', { csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0 });
 });
 
 router.post('/signup', passport.authenticate('local.signup',{
-  successRedirect: '/dashboard',
+  successRedirect: 'users/dashboard',
   failureRedirect: '/users/signup',
   failureFlash: true
 }));
 
-router.post('/signin', function(req, res, next) {
-  let user = req.body.user;
-  let password = req.body.password;
-  if (user === 'fabian' && password ==='123') {
-     res.redirect('/dashboard');
-  }else{
-    res.redirect('/users/login');
-  }
-});
-
-router.get('/register', function(req, res, next) {
-  res.render('users/register');
-});
-
 module.exports = router;
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+}
+
+function notLoggedIn(req, res, next) {
+  if (!req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/');
+}

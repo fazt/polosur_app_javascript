@@ -1,10 +1,16 @@
 <div class="container">
-  <div class="jumbotron">
-    <h1>{{title}}</h1>
-    <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
-    <p>
-      <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
-    </p>
+
+  <div class=" jumbotron">
+    <div class="col-md-6">
+      <img src="/images/polo-sur.png" class="img-responsive" alt="Logotipo Polosur" />
+    </div>
+    <div class="col-md-6">
+      <h1>{{appName}}</h1>
+      <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
+      <p>
+        <a class="btn btn-lg btn-primary" href="../../components/#navbar" role="button">View navbar docs &raquo;</a>
+      </p>
+    </div>
   </div>
 </div>
 
@@ -22,7 +28,7 @@
               <div class="price pull-left">
                 {{ this.price }} Nuevos SOles
               </div>
-              <a href="#" class="btn btn-success pull-right" role="button">Agregar al Carrito</a>
+              <a href="/add-to-cart/{{this._id}}" class="btn btn-success pull-right" role="button">Agregar al Carrito</a>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 
 This is a micro CMS to manage your web store of products
 
+https://asciinema.org/
 
 Bootstrap
 jquery
