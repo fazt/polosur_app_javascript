@@ -5,10 +5,23 @@ const passport = require('passport');
 const csrf = require('csurf');
 var csrfProtection = csrf();
 
+const Order = require('../models/order');
+const Cart = require('../models/cart');
+
 router.use(csrfProtection);
 
 router.get('/dashboard', isLoggedIn, (req, res, next) => {
-  res.render('principal/dashboard', { title: 'Ventas SOftware' });
+  Order.find({ user: req.user }, function (err, orders) {
+    if (err) {
+      return res.write('Error!');
+    }
+    var cart;
+    orders.forEach( order => {
+      cart = new Cart(order.cart);
+      order.items= cart.generateArray();
+    });
+    res.render('principal/dashboard', { title: 'Ventas SOftware', orders:orders });
+  });
 });
 
 router.get('/logout', isLoggedIn, (req, res, next) => {
@@ -26,10 +39,17 @@ router.get('/signin', (req, res, next) => {
 });
 
 router.post('/signin', passport.authenticate('local.signin',{
-  successRedirect: '/users/dashboard',
   failureRedirect: '/users/signin',
   failureFlash: true
-}));
+}), function(req, res, next) {
+  if (req.session.oldUrl) {
+    var oldUrl = req.session.oldUrl;
+    req.session.oldUrl = null;
+    res.redirect(oldUrl);
+  } else {
+    res.redirect('/users/profile');
+  }
+});
 
 router.get('/signin', (req, res, next) => {
   var messages = req.flash('error');
@@ -42,10 +62,18 @@ router.get('/signup', (req, res, next) => {
 });
 
 router.post('/signup', passport.authenticate('local.signup',{
-  successRedirect: 'users/dashboard',
   failureRedirect: '/users/signup',
   failureFlash: true
-}));
+}), function(req, res, next) {
+  if (req.session.oldUrl) {
+    var oldUrl = req.session.oldUrl;
+    req.session.oldUrl = null;
+    res.redirect(oldUrl);
+  } else {
+    res.redirect('/users/profile');
+  }
+});
+//4p, estructurra de internet,
 
 module.exports = router;
 
