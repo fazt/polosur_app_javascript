@@ -4,7 +4,9 @@ const Order = require('../models/order');
 
 module.exports = {
   index: index,
-  addToCart:addToCart,
+  addToCart: addToCart,
+  reduceCart: reduceCart,
+  remove: remove,
   getViewShoppingCart: getViewShoppingCart,
   getCheckoutView: getCheckoutView,
   postCheckout: postCheckout
@@ -36,6 +38,24 @@ function addToCart(req, res, next) {
     console.log(req.session.cart);
     return res.redirect('/');
   });
+}
+
+function reduceCart(req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  cart.reduceByOne(productId);
+
+  req.session.cart = cart;
+  res.redirect('/shopping-cart');
+}
+
+function remove(req, res, next) {
+  var productId = req.params.id;
+  var cart = new Cart(req.session.cart ? req.session.cart : {});
+  cart.removeItem(productId);
+  req.session.cart = cart;
+
+  res.redirect('/shopping-cart');
 }
 
 function getViewShoppingCart(req, res, next) {
