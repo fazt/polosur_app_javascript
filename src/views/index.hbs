@@ -1,6 +1,6 @@
 <div class="container">
 
-  <div class="jumbotron" style="height:400px">
+  <div class="jumbotron" style="background:#eee;height:450px;margin-top:20px;color:black;">
     <div class="col-md-6">
       <img src="/images/polo-sur.png" class="img-responsive" alt="Logotipo Polosur" />
     </div>
@@ -25,24 +25,39 @@
   </div>
 </div>
 
-{{#each products}}
-  <div class="row" style="padding: 12px;">
-    {{#each this}}
-      <div class="col-sm-6 col-md-4">
-        <div class="thumbnail">
-          <img src="{{ this.imagePath }}" class="img-responsive" alt="...">
-          <div class="caption">
-            <h3>{{ this.title }}</h3>
-            <p class="description">{{ this.description }}</p>
-            <div class="clearfix">
-              <div class="price pull-left">
-                {{ this.price }} Nuevos SOles
+<div class="contenedor">
+  {{#each products}}
+    <div class="row " style="padding: 12px;">
+      {{#each this}}
+        <div class="elemento col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <img src="{{ this.imagePath }}" class="img-responsive" alt="...">
+            <div class="caption">
+              <h3>{{ this.title }}</h3>
+              <p class="description">{{ this.description }}</p>
+              <div class="clearfix">
+                <div class="price pull-left">
+                  {{ this.price }} Nuevos SOles
+                </div>
+                <a href="/add-to-cart/{{this._id}}" class="btn btn-success pull-right" role="button">Agregar al Carrito</a>
               </div>
-              <a href="/add-to-cart/{{this._id}}" class="btn btn-success pull-right" role="button">Agregar al Carrito</a>
             </div>
           </div>
         </div>
-      </div>
-    {{/each}}
-  </div>
-{{/each}}
+      {{/each}}
+    </div>
+  {{/each}}
+</div>
+
+<script src="/javascripts/masonry.pkgd.min.js"></script>
+<script>
+window.addEventListener('load', function () {
+  console.log('cargado');
+  var elem = document.querySelector('.contenedor');
+  var msnry = new Masonry( elem, {
+    // options
+    itemSelector: '.elemento',
+    // columnWidth: 200
+  });
+})
+</script>

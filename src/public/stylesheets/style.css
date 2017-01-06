@@ -1,13 +1,4 @@
-.thumbnail img{
-  max-height: 150px;
-}
-.thumbnail .description{
-  color: #7f7f7f;
-}
-.price {
-  font-weight: bold;
-  font-size: 16px;
-}
+
 /*f*/
 .no-margin{
   margin: 0;
@@ -15,8 +6,19 @@
 
 /**/
 .thumbnail img{
-  max-height: 150px;
+  /*max-height: 150px;*/
+  width: 100%;
 }
+.elemento{
+  width: 300px;
+  /*background: #fff;*/
+  float: left;*/
+  /*margin: 5px;*/
+  /*margin-right: 15px;
+  margin-bottom: 15px;*/
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);
+}
+
 .thumbnail .description{
   color: #7f7f7f;
 }
@@ -27,7 +29,7 @@
 
 /* LOGIN*/
 
-body{background: #eee;}
+/*body{background: #eee;}*/
 html,body{
     position: relative;
     height: 100%;
